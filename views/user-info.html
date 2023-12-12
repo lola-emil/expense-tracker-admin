@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <p>Expense Info</p>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <main class="container flex">
+        <div class="flex-1">
+            <canvas id="doughnut-chart"></canvas>
+        </div>
+        <div class="flex-1">
+            <p class="text-xl">Lista sa Expense</p>
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>Food</p>
+                        <p class="text-sm">Ginamos</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php 100.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const doughnutChart = document.getElementById("doughnut-chart");
+
+        const data = {
+            labels: ['Food', 'Bills', 'Rents'],
+            datasets: [
+                {
+                    label: 'Dataset 1',
+                    data: [
+                        100,200,300
+                    ],
+                    backgroundColor: [
+                        "#34d399",
+                        "#c084fc",
+                        "#fb7185"
+                    ],
+                }
+            ]
+        };
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Doughnut Chart'
+                    }
+                }
+            },
+        };
+
+
+
+        const chart = new Chart(doughnutChart, config);
+    </script>
+</body>
+
+</html>

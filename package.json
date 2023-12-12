@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@snowpack/plugin-postcss": "^1.4.3",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "snowpack": "^3.8.8",
+    "tailwindcss": "^3.3.6"
+  }
+}

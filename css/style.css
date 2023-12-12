@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+    body {
+        @apply min-h-screen
+    }
+}
+
+@layer components {
+    .container {
+        @apply mx-auto w-11/12
+    }
+
+    .navbar {
+        @apply w-full h-16 border-b flex items-center
+    }
+
+    .user-list > *:nth-child(odd) {
+        @apply bg-neutral-300
+    }
+}
