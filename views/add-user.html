@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="container flex justify-center items-center h-[calc(100vh-64px)]">
-        <form action="">
+        <form id="register-form">
             <h1 class="text-center text-2xl">User Registration</h1>
             <br>
             <br>
@@ -27,8 +27,16 @@
                 </div>
                 <div>
                     <label for="">Last Name</label>
-                    <input type="text" name="firstname" placeholder="Enter Last Name" class="form-input">
+                    <input type="text" name="lastname" placeholder="Enter Last Name" class="form-input">
                 </div>
+            </div>
+            <div class="mt-3">
+                <label for="">Email</label>
+                <input type="text" name="email" placeholder="Enter Email" class="form-input">
+            </div>
+            <div class="mt-3">
+                <label for="">Position</label>
+                <input type="text" name="position" placeholder="Enter Position" class="form-input">
             </div>
             <div class="mt-3">
                 <label for="">Username</label>
@@ -38,10 +46,44 @@
                 <label for="">Password</label>
                 <input type="password" name="password" placeholder="Enter Password" class="form-input">
             </div>
-    
+
             <input type="submit" value="Submit" class="btn mt-3">
         </form>
     </div>
+
+    <script>
+        const registerForm = document.getElementById("register-form");
+        const token = localStorage.getItem("token");
+
+        if (!token)
+            location.href = "/";
+
+        registerForm.addEventListener("submit", async evt => {
+            evt.preventDefault();
+            const formData = new FormData(registerForm);
+            const body = Object.fromEntries(formData.entries());
+
+            console.log(body);
+
+            const res = await fetch("http://localhost:5000/admin/users/register", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            });
+            const data = await res.json();
+
+            if ((await res.status) == 400) {
+                alert(data.message);
+                return;
+            }
+
+            alert(data.message);
+            location.href = "/overview.html";
+        })
+    </script>
 </body>
 
 </html>

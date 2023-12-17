@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="flex justify-center items-center">
-    <form action="">
+    <form id="login-form">
         <h1 class="text-center text-3xl">Admin</h1>
         <br>
         <div>
@@ -22,5 +22,36 @@
         <br>
         <input type="submit" value="Log In" class="btn">
     </form>
+
+    <script>
+        const loginForm = document.getElementById("login-form");
+
+        loginForm.addEventListener("submit", async evt => {
+            evt.preventDefault();
+            const formData = new FormData(loginForm);
+            const body = Object.fromEntries(formData.entries());
+
+            const res = await fetch("http://localhost:5000/admin/login", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(body)
+            });
+
+            const data = await res.json();
+
+            if ((await res.status) == 400) {
+                alert(data.message)
+                return;
+            }
+
+            localStorage.setItem("token", data.data.token);
+
+            location.assign("/overview.html");
+
+            console.log(data);
+        });
+    </script>
 </body>
 </html>

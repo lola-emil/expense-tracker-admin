@@ -41,41 +41,45 @@
 
         <!-- Mga lista users -->
         <div class="user-list">
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
 
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
         </div>
     </main>
+
+    <script>
+        const usersList = document.querySelector(".user-list");
+
+        const token = localStorage.getItem("token");
+
+        if (!token)
+            location.href = "/";
+
+        async function getUsers() {
+            const res = await fetch("http://localhost:5000/admin/users", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+            })
+            const data = await res.json();
+            console.log(data)
+            for(let i = 0; i < data["data"].length; i++) {
+                usersList.innerHTML += `
+                <a href="/user-info.html?userId=${data["data"][i].user_id}" class="grid grid-cols-4 p-3">
+                <p>${data["data"][i].firstname} ${data["data"][i]["lastname"]}</p>
+                <p>${data["data"][i]["email"]}</p>
+                <p>${data["data"][i]["position"]}</p>
+                <p>- Php ${data["data"][i]["total_expense"] ?? 0} </p>
+            </a>
+                `;
+            }
+        }
+
+        async function fetchData() {
+            await getUsers();
+        }
+
+        fetchData();
+    </script>
 </body>
 
 </html>
