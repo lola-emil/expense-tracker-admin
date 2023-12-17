@@ -1,70 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Admin Sign In</title>
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
-<body>
-    <nav class="navbar">
-        <div class="container flex justify-between items-center">
-            <p>Overview</p>
-
-            <div>
-                <input type="text" placeholder="Search" class="p-3 border rounded">
-            </div>
+<body class="flex justify-center items-center">
+    <form action="">
+        <h1 class="text-center text-3xl">Admin</h1>
+        <br>
+        <div>
+            <label for="">Username</label>
+            <input type="text" placeholder="username" name="username" class="form-input">
         </div>
-    </nav>
-    <br>
-    <main class="container">
-        <div class="grid grid-cols-4 border p-3">
-            <p>Name</p>
-            <p>Email</p>
-            <p>Position</p>
-            <p>Total Expense</p>
+        <div>
+            <label for="">Password</label>
+            <input type="password" name="password" placeholder="password" class="form-input">
         </div>
-
-        <!-- Mga lista users -->
-        <div class="user-list">
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-            <div class="grid grid-cols-4 p-3">
-                <p>Pedro Hagawhaw</p>
-                <p>pedro.5@gmail.com</p>
-                <p>Manager</p>
-                <p>- Php 5359.00 </p>
-            </div>
-        </div>
-    </main>
+        <br>
+        <input type="submit" value="Log In" class="btn">
+    </form>
 </body>
-
 </html>

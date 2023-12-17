@@ -5,7 +5,8 @@
 module.exports = {
   mount: {
     views: "/",
-    css: "/css"    
+    css: "/css",
+    images: "/images"
   },
   plugins: [
     "@snowpack/plugin-postcss"

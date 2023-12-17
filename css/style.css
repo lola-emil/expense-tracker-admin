@@ -20,6 +20,14 @@
     }
 
     .user-list > *:nth-child(odd) {
-        @apply bg-neutral-300
+        @apply bg-neutral-50
+    }
+
+    .form-input {
+        @apply w-full p-3 border rounded
+    }
+
+    .btn {
+        @apply w-full p-3 rounded bg-blue-500 text-white
     }
 }

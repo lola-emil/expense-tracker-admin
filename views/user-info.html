@@ -13,19 +13,28 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar fixed top-0 left-0">
         <div class="container">
-            <p>Expense Info</p>
+            <div class="flex gap-3 items-center">
+                <a href="/overview.html">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.707 4.293a1 1 0 0 1 0 1.414L9.414 12l6.293 6.293a1 1 0 0 1-1.414 1.414l-7-7a1 1 0 0 1 0-1.414l7-7a1 1 0 0 1 1.414 0Z" fill="#333"/></svg>
+                </a>
+                <p>User Expense Info</p>
+            </div>
         </div>
     </nav>
     <br>
     <br>
+    <br>
     <main class="container flex">
         <div class="flex-1">
-            <canvas id="doughnut-chart"></canvas>
+            <canvas id="doughnut-chart" class="w-56"></canvas>
         </div>
         <div class="flex-1">
-            <p class="text-xl">Lista sa Expense</p>
+            <p class="text-xl">
+                
+                Expense List
+            </p>
             <div class="flex flex-col gap-4">
                 <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
                     <div>
@@ -115,7 +124,7 @@
                 {
                     label: 'Dataset 1',
                     data: [
-                        100,200,300
+                        100, 200, 300
                     ],
                     backgroundColor: [
                         "#34d399",
@@ -132,16 +141,15 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'bottom',
+                        position: 'top',
                     },
                     title: {
                         display: true,
-                        text: 'Chart.js Doughnut Chart'
+                        text: 'Expense Overview'
                     }
                 }
             },
         };
-
 
 
         const chart = new Chart(doughnutChart, config);
