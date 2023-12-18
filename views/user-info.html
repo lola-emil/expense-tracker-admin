@@ -17,7 +17,11 @@
         <div class="container">
             <div class="flex gap-3 items-center">
                 <a href="/overview.html">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.707 4.293a1 1 0 0 1 0 1.414L9.414 12l6.293 6.293a1 1 0 0 1-1.414 1.414l-7-7a1 1 0 0 1 0-1.414l7-7a1 1 0 0 1 1.414 0Z" fill="#333"/></svg>
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.707 4.293a1 1 0 0 1 0 1.414L9.414 12l6.293 6.293a1 1 0 0 1-1.414 1.414l-7-7a1 1 0 0 1 0-1.414l7-7a1 1 0 0 1 1.414 0Z"
+                            fill="#333" />
+                    </svg>
                 </a>
                 <p>User Expense Info</p>
             </div>
@@ -32,127 +36,96 @@
         </div>
         <div class="flex-1">
             <p class="text-xl">
-                
                 Expense List
             </p>
-            <div class="flex flex-col gap-4">
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
+            <div class="flex flex-col gap-4" id="expense-list">
 
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
-                    <div>
-                        <p>Food</p>
-                        <p class="text-sm">Ginamos</p>
-                    </div>
-
-                    <div>
-                        <p class="text-rose-500">- Php 100.00</p>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
     <script>
         const doughnutChart = document.getElementById("doughnut-chart");
+        const expenseList = document.getElementById("expense-list");
+        const token = localStorage.getItem("token");
 
-        const data = {
-            labels: ['Food', 'Bills', 'Rents'],
-            datasets: [
+
+        if (!token)
+            location.href = "/";
+
+        async function fetchData() {
+            const urlParams = new URLSearchParams(location.search);
+            const userId = urlParams.get("userId");
+
+            const overviewRes = await fetch(`http://localhost:5000/expense/overview?userId=${userId}`,
                 {
-                    label: 'Dataset 1',
-                    data: [
-                        100, 200, 300
-                    ],
-                    backgroundColor: [
-                        "#34d399",
-                        "#c084fc",
-                        "#fb7185"
-                    ],
-                }
-            ]
-        };
-        const config = {
-            type: 'doughnut',
-            data: data,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Expense Overview'
+                    headers: {
+                        "Authorization": `Bearer ${token}`
                     }
+                });
+            const overviewData = await overviewRes.json();
+
+            const chartData = {
+                labels: overviewData.data.map((value) => (value.category)),
+                datasets: [
+                    {
+                        label: 'Dataset 1',
+                        data: overviewData.data.map((value) => (value.total_expense)),
+                        backgroundColor: [
+                            "#34d399",
+                            "#c084fc",
+                            "#fb7185"
+                        ],
+                    }
+                ]
+            };
+
+
+            const config = {
+                type: 'doughnut',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Expense Overview'
+                        }
+                    }
+                },
+            };
+            const chart = new Chart(doughnutChart, config);
+
+            const recentTransactionRes = await fetch(`http://localhost:5000/expense/transactions?userId=${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            },
-        };
+            })
+            const recentTransactionData = await recentTransactionRes.json();
 
+            console.log(recentTransactionData)
 
-        const chart = new Chart(doughnutChart, config);
+            recentTransactionData.data.forEach((value) => {
+                expenseList.innerHTML += `
+                <div class="flex justify-between items-center hover:bg-neutral-300 rounded p-3">
+                    <div>
+                        <p>${value.category}</p>
+                        <p class="text-sm">${value.note}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-rose-500">- Php ${value.amount}</p>
+                    </div>
+                </div>
+                `;
+            })
+        }
+
+        fetchData();
+
     </script>
 </body>
 

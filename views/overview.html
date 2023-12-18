@@ -29,7 +29,7 @@
         <div class="flex justify-between w-full mb-3">
             <div></div>
             <div class="w-80">
-                <input type="text" placeholder="Search" class="form-input">
+                <input type="text" placeholder="Search" id="user-search" class="form-input">
             </div>
         </div>
         <div class="grid grid-cols-4 border p-3">
@@ -47,6 +47,7 @@
 
     <script>
         const usersList = document.querySelector(".user-list");
+        const userSearch = document.getElementById("user-search");
 
         const token = localStorage.getItem("token");
 
@@ -59,10 +60,37 @@
                 headers: {
                     "Authorization": `Bearer ${token}`
                 },
-            })
+            });
             const data = await res.json();
-            console.log(data)
-            for(let i = 0; i < data["data"].length; i++) {
+            console.log(data);
+            updateList(data);
+        }
+
+        async function fetchData() {
+            await getUsers();
+        }
+
+        fetchData();
+
+        userSearch.addEventListener("input", async evt => {
+            const value = evt.target.value;
+            const res = await fetch(`http://localhost:5000/admin/users/search?q=${value}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+            const data = await res.json();
+
+            console.log(data);
+
+            updateList(data);
+        });
+
+        function updateList(data) {
+            usersList.innerHTML = "";
+
+            for (let i = 0; i < data["data"].length; i++) {
                 usersList.innerHTML += `
                 <a href="/user-info.html?userId=${data["data"][i].user_id}" class="grid grid-cols-4 p-3">
                 <p>${data["data"][i].firstname} ${data["data"][i]["lastname"]}</p>
@@ -73,12 +101,6 @@
                 `;
             }
         }
-
-        async function fetchData() {
-            await getUsers();
-        }
-
-        fetchData();
     </script>
 </body>
 
