@@ -103,7 +103,8 @@
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            })
+            });
+            
             const recentTransactionData = await recentTransactionRes.json();
 
             console.log(recentTransactionData)

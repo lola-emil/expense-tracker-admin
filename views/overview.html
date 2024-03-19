@@ -18,8 +18,8 @@
             </div>
 
             <div>
-                <a href="/add-user.html" class="text-blue-500">
-                    Add User
+                <a href="/index.html" class="text-blue-500 underline hover:text-blue-300 transition-all">
+                    Logout
                 </a>
             </div>
         </div>
@@ -44,6 +44,10 @@
 
         </div>
     </main>
+    
+    <a href="/add-user.html" class="fixed bottom-10 right-10 p-3 rounded bg-blue-500 text-white hover:scale-105 transition-transform">
+        Add User
+    </a>
 
     <script>
         const usersList = document.querySelector(".user-list");
@@ -96,7 +100,7 @@
                 <p>${data["data"][i].firstname} ${data["data"][i]["lastname"]}</p>
                 <p>${data["data"][i]["email"]}</p>
                 <p>${data["data"][i]["position"]}</p>
-                <p>- Php ${data["data"][i]["total_expense"] ?? 0} </p>
+                <p class="text-green-500">Php ${data["data"][i]["total_expense"] ?? 0} </p>
             </a>
                 `;
             }
