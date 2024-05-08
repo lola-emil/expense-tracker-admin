@@ -3,9 +3,7 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/", (req, res) => {
-    res.json({
-        message: "Welcome to the API"
-    })
-});
+    res.render("index");
+})
 
 export default router;
