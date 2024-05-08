@@ -1,9 +1,28 @@
 {
+  "name": "expense-tracker-admin",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "private": true,
+  "repository": "https://github.com/lola-emil/expense-tracker-admin.git",
+  "author": "Rens Saladaga <staleexam19@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"tsc -p . -w\" \"node --watch-path=build .\" \"yarn run css:dev\"",
+    "build": "tsc -p .",
+    "css:dev": "tailwindcss -i ./static/css/input.css -o ./static/css/styles.css -w"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "mysql": "^2.18.1"
+  },
   "devDependencies": {
-    "@snowpack/plugin-postcss": "^1.4.3",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "snowpack": "^3.8.8",
-    "tailwindcss": "^3.3.6"
+    "@types/express": "^4.17.21",
+    "concurrently": "^8.2.2",
+    "daisyui": "^4.11.1",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
   }
 }
