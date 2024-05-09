@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { validateLogin } from "../../utils/validators";
-import { getFlashMessages } from "express-flash-message";
-
+import * as AdminRepo from "../../repository/admin";
 
 export async function showLoginPage(req: Request, res: Response) {
     const error = req.flash('error');
     const fields = req.flash('fields');
+
 
     return res.render("login", {
         error: error[0],
@@ -23,6 +23,11 @@ export async function login(req: Request, res: Response) {
         req.flash('fields', JSON.stringify(body));
         return res.redirect("/login");
     }
+
+    const matchedUser = await AdminRepo.findByUsername(body.username);
+    
+    // Store admin info to session on login success
+    (<any>req.session).admin_id = matchedUser['admin_id'];
 
     return res.redirect("/");
 }

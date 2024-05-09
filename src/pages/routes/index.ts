@@ -1,12 +1,13 @@
 import { Router } from "express";
 import loginRoute from "./login";
+import authGuard from "../../middlewares/authGuard";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", authGuard, (req, res) => {
     res.render("index");
 });
 
-router.use("/login", loginRoute);
+router.use("/login", authGuard, loginRoute);
 
 export default router;
