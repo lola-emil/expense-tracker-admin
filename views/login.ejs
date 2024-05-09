@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Admin | Login</title>
+</head>
+<body>
+
+    <div class="container w-11/12 mx-auto flex items-center justify-center h-screen">
+        <form action="/login" method="post" class="w-full md:w-5/12 lg:w-3/12">
+            <h1 class="font-semibold text-3xl">Sign In</h1>
+            <br>
+
+            <% if (error) { %>
+                <div role="alert" class="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span><%= error %></span>
+                </div>
+            <% }%>
+            <label for="username" class="form-control">
+                <div class="label">
+                    <span class="label-text">Email</span>
+                </div>
+                <input type="text" name="username" id="username" class="input input-bordered" value="<%=fields.username%>">
+            </label>
+
+            <label for="password" class="form-control">
+                <div class="label">
+                    <span class="label-text">Password</span>
+                </div>
+                <input type="password" name="password" id="password" class="input input-bordered" value="<%=fields.password%>">
+            </label>
+            <br>
+            <button type="submit" class="btn btn-primary w-full">Login</button>
+        </form>
+    </div>
+
+    <script defer src="/js/index.js"></script>
+</body>
+</html>
