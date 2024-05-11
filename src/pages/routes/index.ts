@@ -1,12 +1,12 @@
 import { Router } from "express";
-import loginRoute from "./login";
 import authGuard from "../../middlewares/authGuard";
+
+import dashboardRoute from "./dashboard";
+import loginRoute from "./login";
 
 const router = Router();
 
-router.get("/", authGuard, (req, res) => {
-    res.render("index");
-});
+router.use("/", authGuard, dashboardRoute);
 
 router.use("/login", authGuard, loginRoute);
 
