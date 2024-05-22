@@ -72,6 +72,9 @@ export async function expenseOverview(req: Request, res: Response) {
     console.log(amountPerCategory);
 
     res.render("expense-overview", {
+        error: req.flash('error')[0] ?? "",
+        message: req.flash('message')[0] ?? "",
+        userId,
         data: {
             expenseTotal: Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(expenseTotal[0][0].total ?? 0),
             expenses: {

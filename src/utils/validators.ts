@@ -2,6 +2,7 @@ import Joi from "joi"
 import { Admin } from "../repository/admin";
 import * as AdminRepo from "../repository/admin";
 import * as UserRepo from "../repository/user";
+import { Record } from "../repository/record";
 import bcrypt from "bcrypt";
 import { User } from "../repository/user";
 
@@ -17,7 +18,15 @@ const userSchema = Joi.object({
     position: Joi.string().required(),
     password: Joi.string().min(8).alphanum().required(),
     confirmPassword: Joi.string().required()
-})
+});
+
+
+const transactionSchema = Joi.object({
+    category: Joi.string().max(50).required(),
+    note: Joi.string().max(50).required(),
+    amount: Joi.number().required(),
+    user_id: Joi.string().required()
+});
 
 export async function validateLogin(body: Admin) {
     const { error } = loginValidator.validate(body);
@@ -51,4 +60,12 @@ export async function validateUser(body: User) {
         return "Password doesn't match";
 
     return "";
+}
+
+export function validateTransaction(record: Record) {
+    const {error}  = transactionSchema.validate(record);
+
+    if (error) return error.message;
+
+    return null;
 }
