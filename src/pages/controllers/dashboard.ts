@@ -5,12 +5,22 @@ import { validateUser } from "../../utils/validators";
 import * as UserRepo from "../../repository/user";
 
 export async function dashboardPage(req: Request, res: Response) {
+    let q = req.query.q;
+
     let sql = `SELECT tbl_users.user_id as user_id, CONCAT(firstname, " ", lastname) as name, email, position, SUM(amount) as total_amount 
     FROM tbl_users
     LEFT JOIN tbl_records ON tbl_records.user_id = tbl_users.user_id
-    WHERE tbl_records.delete_time IS NULL
-    GROUP BY tbl_users.user_id;`;
-    const result = await db.raw(sql);
+    WHERE tbl_records.delete_time IS NULL `;
+
+    if (q) sql += 'AND firstname LIKE ? OR lastname LIKE ? OR email LIKE ? ' 
+
+    sql += `GROUP BY tbl_users.user_id;`;
+
+    const result = await db.raw(sql, q ? [
+        `%${q}%`,
+        `%${q}%`,
+        `%${q}%`,
+        ]: []);
 
     return res.render("index", {
         message: req.flash('message')[0] ?? "",
@@ -29,6 +39,7 @@ export async function expenseOverview(req: Request, res: Response) {
     let expensePageLimit = 10;
 
     if (Number.isNaN(expensePage)) expensePage = 1;
+
 
     let expenseTotalSQl = `SELECT SUM(amount) as total 
     FROM tbl_records 
