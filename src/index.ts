@@ -3,7 +3,6 @@ import session from "express-session";
 import flash from "connect-flash";
 
 import pagesRoute from "./pages/routes";
-import apiRoute from "./api/routes";
 
 const app = express();
 
@@ -31,8 +30,6 @@ app.use(flash());
 // Add pages
 app.use(pagesRoute);
 
-// Add API routes
-app.use("/api", apiRoute);
 
 
 const PORT = 5005;
