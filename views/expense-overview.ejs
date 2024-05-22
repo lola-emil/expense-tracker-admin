@@ -116,9 +116,8 @@
                                                         href="/restore-record/<%=item.record_id%>?userId=<%=item.user_id%>">Restore</a>
                                                 </li>
                                                 <%}%>
-                                                    <li><a
-                                                            href="/hard-delete/<%=item.record_id%>?userId=<%=item.user_id%>">Hard
-                                                            Delete</a></li>
+                                                    <li><button data-record-id="<%=item.record_id%>" data-user-id="<%= item.user_id %>">Hard
+                                                            Delete</button></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -187,14 +186,14 @@
                             <% if (i==(data.recentlyDeleted.limit - 1)) break; %>
                                 <%}%>
                 </div>
-
+<!-- 
                 <%if (data.recentlyDeleted.items.length> data.recentlyDeleted.limit) {%>
 
                     <div class="w-full flex justify-center mt-2">
                         <a href="" class="text-secondary underline">View all</a>
                     </div>
 
-                    <%}%>
+                    <%}%> -->
 
             </div>
         </div>
@@ -269,10 +268,23 @@
         </svg>
     </button>
 
+    <div id="alert-dialog"
+    class="fixed hidden top-1/2 left-1/2 -translate-x-1/2 bg-base-300 p-5 rounded -translate-y-1/2">
+    <p class="text-lg">Are you sure you want to delete this transaction forever?
+    </p>
+    <br>
+    <div>
+        <button class="btn" id="alert-cancel-btn">Cancel</button>
+        <a class="btn btn-primary" id="alert-confirm-btn">Confirm</a>
+    </div>
+</div>
+
     <script>
         const overlay = document.getElementById('overlay');
         const transactionForm = document.getElementById('add-trans-form');
         const addTransactionBtn = document.getElementById('add-trans-btn');
+
+        const alertDialog = document.getElementById('alert-dialog');
 
         addTransactionBtn.addEventListener('click', evt => {
             overlay.classList.remove('hidden');
@@ -288,6 +300,17 @@
         setTimeout(() => {
             document.querySelector('.toast').innerHTML = "";
         }, 3000)
+
+        document.querySelectorAll('[data-record-id]').forEach(val =>
+
+        val.addEventListener('click', evt => {
+            const recordId = evt.target.getAttribute('data-record-id');     
+            const userId = evt.target.getAttribute('data-user-id');     
+
+            alertDialog.classList.remove('hidden');
+            document.getElementById('alert-confirm-btn').href = '/hard-delete/' + recordId + '?userId=' + userId;
+        })
+        )
 
     </script>
 </body>
