@@ -2,48 +2,148 @@
 <html lang="en" data-theme="business">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
 
-  <link rel="stylesheet" href="/css/styles.css">
-  <script defer src="
-  https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js
-  "></script>
-  <script defer src="/js/index.js"></script>
-
-  <title>Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-  <br>
-  <br>
-  <div class="container w-11/12 mx-auto">
-    <h1 class="text-4xl">Overview</h1>
+    <nav class="navbar bg-base-100">
+        <div class="container mx-auto">
+            <div class="flex-1">
+                <p class="text-xl">Welcome, John</p>
+            </div>
+            <div class="flex-none">
+                <a href="" class="underline text-secondary">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container mx-auto">
+        <!-- <h1 class="text-3xl font-semibold">Overview</h1> -->
+        <br>
+        <div class="w-full flex justify-between items-center">
+            <div></div>
+            <form action="" method="get" class="flex items-center">
+                <input type="text" name="q" placeholder="Enter search term" class="input input-bordered w-96">
+            </form>
+        </div>
+        <br>
+        <!-- table -->
+        <div class=" overflow-x-auto">
+            <table class="table min-w-fit table-zebra">
+                <thead>
+                    <tr>
+                        <%for (let item of data.keys) {%>
+                            <th>
+                                <%= item %>
+                            </th>
+                            <%}%>
+                                <th></th>
+                    </tr>
+                </thead>
 
+                <tbody id="users-list">
+                    <%for (let item of data.result) {%>
+                        <tr>
+                            <td>
+                                <%= item.name %>
+                            </td>
+                            <td>
+                                <%= item.email %>
+                            </td>
+                            <td>
+                                <%= item.position %>
+                            </td>
+                            <td>Php <%= Intl.NumberFormat('en', {notation: 'compact' , maximumFractionDigits:
+                                    2}).format(item.total_amount ?? 0) %>
+                            </td>
+
+                            <td>
+                                <a href="/expense-overview/<%= item.user_id %>"
+                                    class="underline text-secondary">View</a>
+
+                                <button class="underline text-secondary ml-3"
+                                    data-user-id="<%= item.user_id %>">delete</button>
+                            </td>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
     <br>
 
-    <section>
-      <div class="stats shadow">
-        <div class="stat">
-          <div class="stat-figure text-primary">
-            <svg class="inline-block w-8 h-8 stroke-current" width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.197 7.464C10.82 7.167 11.634 7 12.5 7c.866 0 1.681.167 2.303.464C15.378 7.739 16 8.24 16 9s-.621 1.26-1.197 1.536c-.622.297-1.437.464-2.303.464-.866 0-1.681-.167-2.303-.464C9.622 10.261 9 9.76 9 9s.622-1.26 1.197-1.536Zm.54 1.128c-.465.222-.487.408-.487.408s.022.186.487.408c.419.2 1.041.342 1.763.342s1.344-.141 1.763-.342c.465-.222.487-.408.487-.408s-.022-.186-.487-.408c-.419-.2-1.041-.342-1.763-.342s-1.344.141-1.763.342Z" fill="none" />
-              <path d="M12.5 12c1.41 0 2.67-.433 3.495-1.11.003.037.005.073.005.11 0 1.105-1.567 2-3.5 2S9 12.105 9 11c0-.037.002-.073.005-.11C9.83 11.567 11.09 12 12.5 12Z" fill="none" />
-              <path d="M12.5 14c1.41 0 2.67-.433 3.495-1.11.003.037.005.073.005.11 0 1.105-1.567 2-3.5 2S9 14.105 9 13c0-.037.002-.073.005-.11C9.83 13.567 11.09 14 12.5 14Z" fill="none" />
-              <path d="M6.5 2A2.5 2.5 0 0 0 4 4.5v15A2.5 2.5 0 0 0 6.5 22h13.25a.75.75 0 0 0 0-1.5H6.5a1 1 0 0 1-1-1h14.25a.75.75 0 0 0 .75-.75V4.5A2.5 2.5 0 0 0 18 2H6.5ZM19 18H5.5V4.5a1 1 0 0 1 1-1H18a1 1 0 0 1 1 1V18Z" fill="none" />
-            </svg>
-          </div>
-          <div class="stat-title">Total Expense</div>
-          <div class="stat-value text-primary">25.6K</div>
-          <div class="stat-desc">As of this month</div>
-        </div>
-      </div>
-    </section>
+    <div class="toast toast-top toast-start">
 
-    <section class="container h-96 w-10/12">
-      <div id="bar-chart" class="h-full w-full shadow"></canvas>
-    </section>
-  </div>
+        <%if (message) {%>
+            <div class="alert alert-success">
+                <span>
+                    <%= message %>
+                </span>
+            </div>
+            <%}%>
+
+    </div>
+
+    <a href="/add-user" class="btn btn-circle bg-primary btn-lg fixed right-10 bottom-10">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M11.75 3a.75.75 0 0 1 .743.648l.007.102.001 7.25h7.253a.75.75 0 0 1 .102 1.493l-.102.007h-7.253l.002 7.25a.75.75 0 0 1-1.493.101l-.007-.102-.002-7.249H3.752a.75.75 0 0 1-.102-1.493L3.752 11h7.25L11 3.75a.75.75 0 0 1 .75-.75Z"
+                fill="#ffffff" />
+        </svg>
+    </a>
+
+    <div class="fixed left-0 top-0 h-screen hidden w-full bg-neutral-950/50" id="overlay"></div>
+
+    <div id="alert-dialog"
+        class="fixed hidden top-1/2 left-1/2 -translate-x-1/2 bg-base-300 p-5 rounded -translate-y-1/2">
+        <p class="text-lg">Are you sure you want to delete this user?</p>
+        <br>
+        <div>
+            <button class="btn" id="alert-cancel-btn">Cancel</button>
+            <a class="btn btn-primary" id="alert-confirm-btn">Confirm</a>
+        </div>
+    </div>
+    <script>
+        const alertDialog = document.getElementById('alert-dialog');
+        const overlay = document.getElementById('overlay');
+        const cancelBtn = document.getElementById('alert-cancel-btn');
+        /**@type {HTMLAnchorElement} */
+        const confirmBtn = document.getElementById('alert-confirm-btn');
+
+
+
+        document.querySelectorAll('[data-user-id]').forEach(val =>
+
+            val.addEventListener('click', evt => {
+                console.log(evt.target.getAttribute('data-user-id'));
+                let selectedUserId = evt.target.getAttribute('data-user-id');
+
+                overlay.classList.remove('hidden');
+                alertDialog.classList.remove('hidden');
+
+                confirmBtn.href = "/delete-user/" + selectedUserId;
+            })
+        );
+
+
+            // Clear ang toast inig 3 seconds
+        setTimeout(() => {
+            document.querySelector('.toast').innerHTML = "";
+        }, 3000)
+
+
+
+        cancelBtn.addEventListener('click', evt => {
+            overlay.classList.add('hidden');
+            alertDialog.classList.add('hidden');
+        });
+
+    </script>
 </body>
 
 </html>

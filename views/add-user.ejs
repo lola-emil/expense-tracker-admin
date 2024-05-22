@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="business">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Admin | Add User</title>
+</head>
+
+<body>
+    <nav class="navbar bg-base-100">
+        <div class="container mx-auto">
+            <div class="flex-1">
+                <p class="text-xl">Add User</p>
+            </div>
+            <div class="flex-none">
+                <a href="/" class="underline text-secondary">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+   <div class="container w-11/12 mx-auto flex items-center justify-center">
+    <form action="/add-user" method="post" class="w-1/2">
+        <br>
+
+        <% if (error) { %>
+            <div role="alert" class="alert alert-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>
+                    <%= error %>
+                </span>
+            </div>
+            <% }%>
+
+                <div class="flex gap-4 w-full">
+                    <label for="username" class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">First Name</span>
+                        </div>
+                        <input type="text" name="firstname" id="firstname" 
+                        class="input input-bordered"
+                        value="<%= fields.firstname %>">
+                    </label>
+
+                    <label for="username" class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Last Name</span>
+                        </div>
+                        <input type="text" name="lastname" id="lastname" 
+                        class="input input-bordered"
+                        value="<%= fields.lastname %>">
+                    </label>
+                </div>
+
+                <label for="username" class="form-control">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input type="text" name="email" id="email" 
+                    class="input input-bordered"
+                    value="<%= fields.email %>">
+                </label>
+
+                <label for="username" class="form-control">
+                    <div class="label">
+                        <span class="label-text">Position</span>
+                    </div>
+                    <!-- <input type="text" name="email" id="email" 
+                    class="input input-bordered"
+                    value="<%= fields.email %>"> -->
+
+                    <select name="position" id="position" class=" select select-bordered">
+                        <option value="" selected disabled>Position</option>
+                        <option value="manager">Manager</option>
+                        <option value="staff" >Staff</option>
+                    </select>
+                </label>
+
+                <label for="password" class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Password</span>
+                    </div>
+                    <input type="password" name="password" id="password" 
+                    class="input input-bordered w-full"
+                    value="<%= fields.password %>">
+                </label>
+                <label for="password" class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Confirm Password</span>
+                    </div>
+                    <input type="password" name="confirmPassword" id="confirmPassword" 
+                    class="input input-bordered w-full"
+                    value="<%= fields.confirmPassword %>">
+                </label>
+                <br>
+                <button type="submit" class="btn btn-primary w-full">Submit</button>
+    </form>
+   </div>
+
+
+    <script defer src="/js/index.js"></script>
+</body>
+
+</html>
