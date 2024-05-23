@@ -53,11 +53,11 @@ export async function expenseOverview(req: Request, res: Response) {
     ORDER BY created_at DESC
     LIMIT 10 OFFSET ${(expensePage - 1) * 10}`;
 
-    let recentlyDeletedSQL = `SELECT * 
+    let recentlyAddedSQL = `SELECT * 
     FROM tbl_records
     WHERE user_id = '${userId}'
     AND delete_time IS NULL
-    ORDER BY delete_time DESC
+    ORDER BY created_at DESC
     LIMIT 5`;
 
     let countExpensesSQL = `SELECT COUNT(*) as itemCount 
@@ -75,7 +75,7 @@ export async function expenseOverview(req: Request, res: Response) {
     const amountPerCategory = await db.raw(amountPerCategorySQL);
     const expenseTotal = await db.raw(expenseTotalSQl);
     const expenses = await db.raw(expensesSQL);
-    let recentlyDeleted = await db.raw(recentlyDeletedSQL);
+    let recentlyDeleted = await db.raw(recentlyAddedSQL);
 
     let countExpenses = await db.raw(countExpensesSQL);
 
