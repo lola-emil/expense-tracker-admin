@@ -16,6 +16,7 @@ router.post("/add-user", DashboardController.addUser);
 router.get('/delete-user/:userId', async (req, res) => {
     const userId = req.params.userId;
 
+    await RecordRepo.deleteAllByUserId(userId);
     await UserRepo.deleteUser(userId);
 
     req.flash('message', 'User deleted successfully');

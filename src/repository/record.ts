@@ -122,3 +122,7 @@ export async function restore(id: string) {
     const res = await db<Record>(TBL_NAME).update({ 'delete_time': null }).where('record_id', id);
     return res;
 }
+
+export async function deleteAllByUserId(userId: string) {
+    const res = await db<Record>(TBL_NAME).delete().where('user_id', userId);
+}
