@@ -64,13 +64,15 @@ export async function expenseOverview(req: Request, res: Response) {
     GROUP BY category;
     `;
 
+    let userFullNameSQL = `SELECT CONCAT(firstname, ' ', lastname) as userFullName FROM tbl_users WHERE user_id = '${userId}'`;
+
     const amountPerCategory = await db.raw(amountPerCategorySQL);
     const expenseTotal = await db.raw(expenseTotalSQl);
     const expenses = await db.raw(expensesSQL);
     let recentlyDeleted = await db.raw(recentlyAddedSQL);
 
     let countExpenses = await db.raw(countExpensesSQL);
-
+    const userFullName = await db.raw(userFullNameSQL);
 
     console.log(amountPerCategory);
 
@@ -78,6 +80,7 @@ export async function expenseOverview(req: Request, res: Response) {
         error: req.flash('error')[0] ?? "",
         message: req.flash('message')[0] ?? "",
         userId,
+        userFullName: userFullName[0][0].userFullName,
         data: {
             expenseTotal: Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(expenseTotal[0][0].total ?? 0),
             expenses: {
